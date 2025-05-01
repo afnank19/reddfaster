@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
   try {
     const res = await fetch(imageUrl, {
       headers: {
-        'User-Agent': 'Mozilla/5.0',
+        'User-Agent': 'web:reddfaster:v1.0 (by /u/afnank19)',
       },
     });
 
