@@ -25,11 +25,12 @@ export const GetImagesFromSubredditProxied = async (subreddit, cursor) => {
       }
     );
   
-    // console.log(response)
+    console.log(response)
     if (!response.ok) {
       throw new Error("Unavailable subreddit");
     }
     const json = await response.json();
+    console.log(json)
     const posts = json.data.children;
   
     // Rewrite image URLs through proxy
