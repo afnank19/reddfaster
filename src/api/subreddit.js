@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 const RESULT_LIMIT = 50;
 export const GetImagesFromSubreddit = async (subreddit) => {
   const response = await fetch(
