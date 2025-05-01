@@ -25,10 +25,7 @@ const Search = () => {
             setLoading(true)
             setError(false)
             const data = await searchForSubreddits(query);
-            const debug = await GetImagesFromSubredditProxied("pics");
-
-            console.log(debug);
-
+            
             setData(data);
         } catch (error) {
             setError(true)
