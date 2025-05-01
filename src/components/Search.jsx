@@ -1,6 +1,6 @@
 'use client'
 import { useState } from "react"
-import { searchForSubreddits } from "../api/subreddit";
+import { GetImagesFromSubredditProxied, searchForSubreddits } from "../api/subreddit";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -25,6 +25,9 @@ const Search = () => {
             setLoading(true)
             setError(false)
             const data = await searchForSubreddits(query);
+            const debug = await GetImagesFromSubredditProxied("pics");
+
+            console.log(debug);
 
             setData(data);
         } catch (error) {
