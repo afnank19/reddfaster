@@ -43,6 +43,7 @@ export const GetImagesFromSubredditProxied = async (subreddit, cursor) => {
       }
     );
   
+    console.log(response.headers)
     console.log(response)
     if (!response.ok) {
       throw new Error("Unavailable subreddit");
