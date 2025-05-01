@@ -67,6 +67,45 @@ export const GetImagesFromSubredditProxied = async (subreddit, cursor) => {
     return { data: images, after: json.data.after, before: json.data.before };
 };
 
+export const GetImagesFromSubredditProxy = async (subreddit, cursor) => {
+  const params = new URLSearchParams();
+  params.set('subreddit', subreddit);
+  if (cursor) params.set('cursor', cursor);
+
+  const base =
+    process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}` // deployed on Vercel
+      : 'http://localhost:3000'; 
+
+  const response = await fetch(`${base}/api/reddit-proxy?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error(`Subreddit unavailable (${response.status})`);
+  }
+
+  console.log(response)
+  if (!response.ok) {
+    throw new Error("Unavailable subreddit");
+  }
+  const json = await response.json();
+  console.log(json)
+  const posts = json.data.children;
+
+  // Rewrite image URLs through proxy
+  const images = posts
+    .filter((post) => post.data.post_hint === 'image') // Only image posts
+    .map((post) => {
+      const originalUrl = post.data.preview.images[0].resolutions[post.data.preview.images[0].resolutions.length-1].url;
+      // console.log(originalUrl.replace(/&amp;/g, '&'))
+      const proxiedUrl = `/api/image-proxy?url=${encodeURIComponent(originalUrl.replace(/&amp;/g, '&'))}`;
+      return {
+        ...post.data,
+        proxiedUrl,
+      };
+    });
+
+  return { data: images, after: json.data.after, before: json.data.before };
+};
+
 export const searchForSubreddits = async (searchTerm) => {
   const response = await fetch(
     `https://www.reddit.com/subreddits/search.json?q=${searchTerm}&include_over_18=false`
