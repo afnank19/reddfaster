@@ -3,6 +3,7 @@ import { useState } from "react"
 import { GetImagesFromSubredditProxied, searchForSubreddits } from "../api/subreddit";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import FastLink from "./FastLink"
 
 const Search = () => {
     const [query, setQuery] = useState("");
@@ -25,7 +26,7 @@ const Search = () => {
             setLoading(true)
             setError(false)
             const data = await searchForSubreddits(query);
-            
+
             setData(data);
         } catch (error) {
             setError(true)
@@ -62,14 +63,15 @@ const Search = () => {
                 <div className="flex flex-col gap-2 items-start w-full max-w-lg overflow-y-scroll h-[50vh] bg-[#131313] rounded-2xl">
                     {data.map((subreddit, index) => {
                         return (
-                            <Link key={index} 
-                                className="px-3 text-[#C6C6C6] hover:underline hover:text-[#FF8b60] underline-offset-1" 
-                                href={"/r/"+subreddit.data?.display_name} 
-                                prefetch={false}
-                                onMouseEnter={() => handleMouseEnter("/r/"+subreddit.data?.display_name)}
-                            >
-                                r/{subreddit.data?.display_name}
-                            </Link>
+                            // <Link key={index} 
+                            //     className="px-3 text-[#C6C6C6] hover:underline hover:text-[#FF8b60] underline-offset-1" 
+                            //     href={"/r/"+subreddit.data?.display_name} 
+                            //     prefetch={false}
+                            //     onMouseEnter={() => handleMouseEnter("/r/"+subreddit.data?.display_name)}
+                            // >
+                            //     r/{subreddit.data?.display_name}
+                            // </Link>
+                            <FastLink key={index} subreddit={subreddit.data?.display_name}/>
                         )
                     })}
                     

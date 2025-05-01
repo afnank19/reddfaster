@@ -29,15 +29,17 @@ export default async function PostsPage({ params, searchParams }) {
     const nextUrl = "/r/"+subreddit;
 
   return (
-    <div className="flex flex-col items-center">
-      <Link href={"/"} className="font-bold text-3xl py-1">Redd<span className="text-[#FF5700]">Faster</span></Link>
-      <p className="font-sm text-neutral-400">Browse reddit images super fast!</p>
-      <Search />
-      <h3 className="pt-8 font-bold text-xl">Viewing: r/{subreddit}</h3>
-      {/* <Suspense fallback={<div className="p-4">Loading images…</div>}>
-        <MediaGridT key={nextUrl} data={posts} nextUrl={nextUrl}/>
-      </Suspense> */}
+    <>
+      <div className="flex flex-col items-center">
+        <Link href={"/"} className="font-bold text-3xl py-1">Redd<span className="text-[#FF5700]">Faster</span></Link>
+        <p className="font-sm text-neutral-400">Browse reddit images super fast!</p>
+        <Search />
+        <h3 className="pt-8 font-bold text-xl">Viewing: r/{subreddit}</h3>
+        {/* <Suspense fallback={<div className="p-4">Loading images…</div>}>
+          <MediaGridT key={nextUrl} data={posts} nextUrl={nextUrl}/>
+        </Suspense> */}
+      </div>
       <MediaGrid subreddit={subreddit} nextUrl={nextUrl} />
-    </div>
+    </>
   );
 }

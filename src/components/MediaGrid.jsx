@@ -3,33 +3,40 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import PrefetchLink from "./PrefetchLink";
 import { GetImagesFromSubredditProxied } from "../api/subreddit";
+import { useQuery } from '@tanstack/react-query';
 
 const MediaGrid = ({ subreddit, nextUrl }) => {
-  const [data, setData] = useState(null);
-  const [isLoading, setLoading] = useState(false);
-  const [isError, setError] = useState(false);
+  // const [data, setData] = useState(null);
+  // const [isLoading, setLoading] = useState(false);
+  // const [isError, setError] = useState(false);
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['subreddit', subreddit],
+    queryFn: () => GetImagesFromSubredditProxied(subreddit),
+    staleTime: 1000 * 60 * 5,
+  });
 
 
-  useEffect(() => {
-    const fetchSubreddits = async () => {
-            try {
-                setLoading(true)
-                setError(false)
-                const data = await GetImagesFromSubredditProxied(subreddit);
+  // useEffect(() => {
+  //   const fetchSubreddits = async () => {
+  //           try {
+  //               setLoading(true)
+  //               setError(false)
+  //               const data = await GetImagesFromSubredditProxied(subreddit);
     
-                console.log(data.data);
+  //               console.log(data.data);
     
-                setData(data.data);
-            } catch (error) {
-                console.log(error)
-                setError(true)
-            } finally {
-                setLoading(false)
-            }
-    }
+  //               setData(data.data);
+  //           } catch (error) {
+  //               console.log(error)
+  //               setError(true)
+  //           } finally {
+  //               setLoading(false)
+  //           }
+  //   }
 
-    fetchSubreddits();
-  }, [subreddit, nextUrl])
+  //   fetchSubreddits();
+  // }, [subreddit, nextUrl])
 
   if (isLoading) {
     return (
@@ -39,7 +46,7 @@ const MediaGrid = ({ subreddit, nextUrl }) => {
     )
   }
 
-  if (isError) {
+  if (error) {
     return (
       <div>
           Oops, you went a little too fast!
@@ -50,7 +57,7 @@ const MediaGrid = ({ subreddit, nextUrl }) => {
   return (
     <>
       <div className=" gap-4 p-4 items-center md:columns-2 columns-1">
-        {data != null ? data.map((childData, index) => {
+        {data != null ? data.data.map((childData, index) => {
 
           return "image" == "image" ? (
             <div key={index} className="">
@@ -61,7 +68,7 @@ const MediaGrid = ({ subreddit, nextUrl }) => {
                   src={childData.proxiedUrl.replace(/&amp;/g, '&')} 
                   width="640" 
                   height="640" 
-                  className="w-full object-cover rounded-lg m-1 mt-4"
+                  className="w-full object-cover rounded-lg m-1 mt-4 bg-neutral-800"
                   quality={80}
               />
               {/* <img

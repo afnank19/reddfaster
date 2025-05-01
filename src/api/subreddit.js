@@ -1,4 +1,4 @@
-const RESULT_LIMIT = 50;
+const RESULT_LIMIT = 30;
 export const GetImagesFromSubreddit = async (subreddit) => {
   const response = await fetch(
     `https://www.reddit.com/r/${subreddit}/hot.json?limit=${RESULT_LIMIT}`,
@@ -43,13 +43,13 @@ export const GetImagesFromSubredditProxied = async (subreddit, cursor) => {
       }
     );
   
-    console.log(response.headers)
-    console.log(response)
+    //console.log(response.headers)
+    //console.log(response)
     if (!response.ok) {
       throw new Error("Unavailable subreddit");
     }
     const json = await response.json();
-    console.log(json)
+    //console.log(json)
     const posts = json.data.children;
   
     // Rewrite image URLs through proxy
