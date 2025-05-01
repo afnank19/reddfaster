@@ -7,13 +7,13 @@ import MediaGridT from "./../../../components/MediaGridT";
 import { Suspense } from "react";
 import MediaGrid from "./../../../components/MediaGrid";
 
-async function getPosts(subreddit, cursor) {
-  let query_subredd = subreddit ? subreddit : "Pics"
+// async function getPosts(subreddit, cursor) {
+//   let query_subredd = subreddit ? subreddit : "Pics"
 
-  const res = await GetImagesFromSubredditProxied(query_subredd, cursor);
+//   const res = await GetImagesFromSubredditProxy(query_subredd, cursor);
 
-  return {posts: res.data, after: res.after, before: res.before };
-}
+//   return {posts: res.data, after: res.after, before: res.before };
+// }
 
 export default async function PostsPage({ params, searchParams }) {
     const { subreddit } = await params;
@@ -24,7 +24,7 @@ export default async function PostsPage({ params, searchParams }) {
     if (afterCursor != undefined) {
       cursor = "after=" + afterCursor;
     }
-    const { posts, after} = await getPosts(subreddit, cursor);
+    // const { posts, after} = await getPosts(subreddit, cursor);
 
     const nextUrl = "/r/"+subreddit;
 
@@ -34,10 +34,10 @@ export default async function PostsPage({ params, searchParams }) {
       <p className="font-sm text-neutral-400">Browse reddit images super fast!</p>
       <Search />
       <h3 className="pt-8 font-bold text-xl">Viewing: r/{subreddit}</h3>
-      <Suspense fallback={<div className="p-4">Loading images…</div>}>
+      {/* <Suspense fallback={<div className="p-4">Loading images…</div>}>
         <MediaGridT key={nextUrl} data={posts} nextUrl={nextUrl}/>
-      </Suspense>
-      {/* <MediaGrid subreddit={subreddit} nextUrl={nextUrl} /> */}
+      </Suspense> */}
+      <MediaGrid subreddit={subreddit} nextUrl={nextUrl} />
     </div>
   );
 }
