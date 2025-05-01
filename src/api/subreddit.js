@@ -1,6 +1,3 @@
-export const runtime = "nodejs";
-
-
 const RESULT_LIMIT = 50;
 export const GetImagesFromSubreddit = async (subreddit) => {
   const response = await fetch(
@@ -37,12 +34,7 @@ export const GetImagesFromSubreddit = async (subreddit) => {
 
 export const GetImagesFromSubredditProxied = async (subreddit, cursor) => {
     const response = await fetch(
-      `https://www.reddit.com/r/${subreddit}/hot.json?limit=${RESULT_LIMIT}&${cursor}`,
-      {
-        headers: {
-          'User-Agent': 'Mozilla/5.0', // Reddit prefers this
-        },
-      }
+      `https://www.reddit.com/r/${subreddit}/hot.json?limit=${RESULT_LIMIT}&${cursor}`
     );
   
     console.log(response)
