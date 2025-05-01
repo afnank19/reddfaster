@@ -74,7 +74,7 @@ export const GetImagesFromSubredditProxy = async (subreddit, cursor) => {
 
   const base =
     process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}` // deployed on Vercel
+      ? `https://reddfaster.vercel.app` // deployed on Vercel
       : 'http://localhost:3000'; 
 
   console.log(base)
