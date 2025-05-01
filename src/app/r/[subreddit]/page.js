@@ -1,6 +1,6 @@
 export const runtime = "nodejs";
 import Link from "next/link";
-import { GetImagesFromSubredditProxied, GetImagesFromSubredditProxy } from "../../../api/subreddit"
+import { GetImagesFromSubredditProxied, GetImagesFromSubredditProxy, searchForSubreddits } from "../../../api/subreddit"
 import Search from "../../../components/Search";
 // import MediaGrid from "@/components/MediaGrid";
 import MediaGridT from "./../../../components/MediaGridT";
@@ -10,6 +10,9 @@ async function getPosts(subreddit, cursor) {
   let query_subredd = subreddit ? subreddit : "Pics"
 
   const res = await GetImagesFromSubredditProxy(query_subredd, cursor);
+  const debug = await searchForSubreddits("wallpapers");
+
+  console.log("DEBUG:",debug);
 
   return {posts: res.data, after: res.after, before: res.before };
 }
