@@ -1,4 +1,4 @@
-//import { GetImagesFromSubreddit, GetImagesFromSubredditProxied } from "@/api/subreddit";
+export const runtime = "nodejs";
 import Link from "next/link";
 import { GetImagesFromSubredditProxied } from "../../../api/subreddit"
 import Search from "../../../components/Search";
