@@ -77,19 +77,20 @@ export const GetImagesFromSubredditProxy = async (subreddit, cursor) => {
       ? `https://${process.env.VERCEL_URL}` // deployed on Vercel
       : 'http://localhost:3000'; 
 
+  console.log(base)
   const response = await fetch(`${base}/api/reddit-proxy?${params.toString()}`);
   if (!response.ok) {
     throw new Error(`Subreddit unavailable (${response.status})`);
   }
 
   console.log(response)
+  const json = await response.json();
+  console.log(json)
   if (!response.ok) {
     throw new Error("Unavailable subreddit");
   }
-  const json = await response.json();
-  console.log(json)
   const posts = json.data.children;
-
+  
   // Rewrite image URLs through proxy
   const images = posts
     .filter((post) => post.data.post_hint === 'image') // Only image posts
