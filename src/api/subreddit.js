@@ -34,7 +34,7 @@ export const GetImagesFromSubreddit = async (subreddit) => {
 
 export const GetImagesFromSubredditProxied = async (subreddit, cursor) => {
     const response = await fetch(
-      `https://www.reddit.com/r/${subreddit}/hot.json?limit=${RESULT_LIMIT}&${cursor}`,
+      `https://www.reddit.com/r/${subreddit}/hot.json?limit=${RESULT_LIMIT}`,
       {
         headers: {
           'User-Agent': 'web:reddfaster:v1.0 (by /u/afnank19)', // Reddit is more permissive with real browser agents
