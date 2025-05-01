@@ -1,3 +1,6 @@
+export const runtime = "nodejs";
+
+
 const RESULT_LIMIT = 50;
 export const GetImagesFromSubreddit = async (subreddit) => {
   const response = await fetch(
@@ -9,10 +12,27 @@ export const GetImagesFromSubreddit = async (subreddit) => {
     }
   );
 
-  const data = await response.json();
+  if (!response.ok) {
+    throw new Error("Unavailable subreddit");
+  }
+  const json = await response.json();
+  console.log(json)
+  const posts = json.data.children;
 
-  //console.log(data.data.children[5].data);
-  return {data: data.data.children, after: data.data.after};
+  // Rewrite image URLs through proxy
+  const images = posts
+    .filter((post) => post.data.post_hint === 'image') // Only image posts
+    .map((post) => {
+      const originalUrl = post.data.preview.images[0].resolutions[post.data.preview.images[0].resolutions.length-1].url;
+      // console.log(originalUrl.replace(/&amp;/g, '&'))
+      const proxiedUrl = `/api/image-proxy?url=${encodeURIComponent(originalUrl.replace(/&amp;/g, '&'))}`;
+      return {
+        ...post.data,
+        proxiedUrl,
+      };
+    });
+
+  return { data: images, after: json.data.after, before: json.data.before };
 };
 
 export const GetImagesFromSubredditProxied = async (subreddit, cursor) => {
