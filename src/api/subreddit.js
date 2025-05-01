@@ -1,5 +1,3 @@
-export const runtime = "nodejs";
-
 const RESULT_LIMIT = 50;
 export const GetImagesFromSubreddit = async (subreddit) => {
   const response = await fetch(
@@ -39,8 +37,9 @@ export const GetImagesFromSubredditProxied = async (subreddit, cursor) => {
       `https://www.reddit.com/r/${subreddit}/hot.json?limit=${RESULT_LIMIT}`,
       {
         headers: {
-          'User-Agent': 'web:reddfaster:v1.0 (by /u/afnank19)', // Reddit is more permissive with real browser agents
+          'User-Agent': 'web:reddfaster:v1.0 (by /u/afnank19)',
         },
+        next: { revalidate: 30 }
       }
     );
   
