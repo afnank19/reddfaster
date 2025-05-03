@@ -60,7 +60,7 @@ const Search = () => {
                     Oops, you went a little too fast!
                 </div> 
                 : data !== null ?
-                <div className="flex flex-col gap-2 items-start w-full max-w-lg overflow-y-scroll h-[50vh] bg-[#131313] rounded-2xl">
+                <div className="flex flex-col gap-2 items-start w-full max-w-lg overflow-y-scroll h-[20vh] bg-[#131313] rounded-2xl">
                     {data.map((subreddit, index) => {
                         return (
                             // <Link key={index} 
@@ -71,7 +71,7 @@ const Search = () => {
                             // >
                             //     r/{subreddit.data?.display_name}
                             // </Link>
-                            <FastLink key={index} subreddit={subreddit.data?.display_name}/>
+                            <FastLink key={index} index={index} subreddit={subreddit.data?.display_name}/>
                         )
                     })}
                     

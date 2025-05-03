@@ -56,7 +56,7 @@ export const GetImagesFromSubredditProxied = async (subreddit, cursor) => {
     const images = posts
       .filter((post) => post.data.post_hint === 'image') // Only image posts
       .map((post) => {
-        const originalUrl = post.data.preview.images[0].resolutions[post.data.preview.images[0].resolutions.length-1].url;
+        const originalUrl = post.data.preview.images[0].resolutions[2].url; // improve indexing here
         // console.log(originalUrl.replace(/&amp;/g, '&'))
         const proxiedUrl = `/api/image-proxy?url=${encodeURIComponent(originalUrl.replace(/&amp;/g, '&'))}`;
         return {

@@ -56,7 +56,7 @@ const MediaGrid = ({ subreddit, nextUrl }) => {
 
   return (
     <>
-      <div className=" gap-4 p-4 items-center md:columns-2 columns-1">
+      <div className=" gap-4 p-4 items-center md:columns-4 columns-1">
         {data != null ? data.data.map((childData, index) => {
 
           return "image" == "image" ? (
@@ -64,7 +64,7 @@ const MediaGrid = ({ subreddit, nextUrl }) => {
               <Image 
                   alt="image from reddit"
                   key={index} 
-                  loading="lazy" 
+                  loading={index > 10 ? "lazy" : "eager"} 
                   src={childData.proxiedUrl.replace(/&amp;/g, '&')} 
                   width="640" 
                   height="640" 
