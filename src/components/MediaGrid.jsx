@@ -56,7 +56,7 @@ const MediaGrid = ({ subreddit, nextUrl }) => {
 
   return (
     <>
-      <div className=" gap-4 p-4 items-center md:columns-4 columns-1">
+      <div className=" gap-4 p-4 items-center grid grid-cols-4">
         {data != null ? data.data.map((childData, index) => {
 
           return "image" == "image" ? (
